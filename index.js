@@ -1,6 +1,4 @@
-const { json } = require("express");
 const express = require("express");
-const morgan = require("morgan");
 const cors = require("cors");
 const app = express();
 
@@ -29,16 +27,6 @@ let persons = [
     number: "39-23-6423122",
   },
 ];
-
-morgan.token("content", function (req, res) {
-  return JSON.stringify({ name: req.body.name, number: req.body.number });
-});
-app.use(morgan(":method :url :response-time :content"));
-
-const generateId = () => {
-  const maxId = persons.length > 0 ? Math.max(persons.map((p) => p.id)) : 0;
-  return maxId + 1;
-};
 
 app.get("/api/persons", (request, response) => {
   response.json(persons);
